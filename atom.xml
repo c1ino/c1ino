@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>c1ino&#39;s Blog</title>
+  
+  
+  <link href="/c1ino/atom.xml" rel="self"/>
+  
+  <link href="https://c1ino.github.io/c1ino/"/>
+  <updated>2019-07-21T20:45:35.577Z</updated>
+  <id>https://c1ino.github.io/c1ino/</id>
+  
+  <author>
+    <name>c1ino</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简易建立 Win10 至 iOS 的多媒体无线串流</title>
+    <link href="https://c1ino.github.io/c1ino/2019/06-19-streaming-from-win10-to-ios-primer/"/>
+    <id>https://c1ino.github.io/c1ino/2019/06-19-streaming-from-win10-to-ios-primer/</id>
+    <published>2019-06-18T16:00:00.000Z</published>
+    <updated>2019-07-21T20:45:35.577Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;关于如何在局域网内&lt;strong&gt;从 Win10 系统串流至 iOS 系统&lt;/strong&gt;的一些简易方法的总结。&lt;/p&gt;
+&lt;p&gt;主要使用 &lt;strong&gt;FFmpeg&lt;/strong&gt; 和 iOS 的 &lt;strong&gt;VLC&lt;/strong&gt; 应用通过常见的流媒体协议实现&lt;strong&gt;直播&lt;/strong&gt;串流，以及其他一些不需使用 FFmpeg 的&lt;strong&gt;点播&lt;/strong&gt;串流方法。&lt;/p&gt;
+&lt;p&gt;（多媒体串流，指无需下载完整文件就可以播放流媒体。）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;s&gt;写作 primer guide，读作笔记&lt;/s&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;目录&quot;&gt;&lt;a href=&quot;#目录&quot; class=&quot;headerlink&quot; title=&quot;目录&quot;&gt;&lt;/a&gt;目录&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;前言&lt;/li&gt;
+&lt;li&gt;目录&lt;/li&gt;
+&lt;li&gt;简介&lt;ul&gt;
+&lt;li&gt;用途&lt;/li&gt;
+&lt;li&gt;优点&lt;/li&gt;
+&lt;li&gt;弊端&lt;/li&gt;
+&lt;li&gt;环境准备参考&lt;/li&gt;
+&lt;li&gt;FFmpeg 使用示例&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;直播&lt;ul&gt;
+&lt;li&gt;HTTP 点对点串流&lt;/li&gt;
+&lt;li&gt;UDP/RTP 组播串流&lt;/li&gt;
+&lt;li&gt;RTMP/HLS/DASH 流媒体服务器串流&lt;/li&gt;
+&lt;li&gt;直播附笔&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;点播&lt;ul&gt;
+&lt;li&gt;常见文件服务器&lt;/li&gt;
+&lt;li&gt;DLNA / UPnP 服务器&lt;/li&gt;
+&lt;li&gt;点播附笔&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他类型&lt;/li&gt;
+&lt;li&gt;附录&lt;ul&gt;
+&lt;li&gt;部分相关参考&lt;/li&gt;
+&lt;li&gt;题外话
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://c1ino.github.io/c1ino/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="串流" scheme="https://c1ino.github.io/c1ino/categories/%E4%B8%B2%E6%B5%81/"/>
+    
+    
+      <category term="iOS" scheme="https://c1ino.github.io/c1ino/tags/iOS/"/>
+    
+      <category term="VLC" scheme="https://c1ino.github.io/c1ino/tags/VLC/"/>
+    
+      <category term="FFmpeg" scheme="https://c1ino.github.io/c1ino/tags/FFmpeg/"/>
+    
+      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
+    
+      <category term="streaming" scheme="https://c1ino.github.io/c1ino/tags/streaming/"/>
+    
+  </entry>
+  
+</feed>
