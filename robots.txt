@@ -12,3 +12,4 @@ Disallow: /vendors/
 Disallow: /fancybox/
 
 Sitemap: https://c1ino.github.io/c1ino/sitemap.xml
+Sitemap: https://c1ino.github.io/c1ino/baidusitemap.xml
