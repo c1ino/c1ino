@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/c1ino/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/c1ino/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/c1ino/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/c1ino/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/c1ino/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/c1ino/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/c1ino/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言原理是使用 ANSI 转义序列（ANSI escape code） 来控制文本的颜色，在 Win10 系统的 命令提示符 / 命令行 / 控制台 / cmd 的窗口中仅使用 cmd.exe 内置的命令来实现彩色输出，无论是在 Command Prompt（命令提示符） 中还是 .bat / .cmd 脚本中。 ANSI 转义序列 支持的颜色： 3/4 bit（8/16色）、8 bit（256色">
+<meta name="keywords" content="Win10,bat&#x2F;cmd,CLI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Win10 命令提示符自带命令实现彩色输出">
+<meta property="og:url" content="https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/index.html">
+<meta property="og:site_name" content="c1ino&#39;s Blog">
+<meta property="og:description" content="前言原理是使用 ANSI 转义序列（ANSI escape code） 来控制文本的颜色，在 Win10 系统的 命令提示符 / 命令行 / 控制台 / cmd 的窗口中仅使用 cmd.exe 内置的命令来实现彩色输出，无论是在 Command Prompt（命令提示符） 中还是 .bat / .cmd 脚本中。 ANSI 转义序列 支持的颜色： 3/4 bit（8/16色）、8 bit（256色">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-03T21:05:21.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Win10 命令提示符自带命令实现彩色输出">
+<meta name="twitter:description" content="前言原理是使用 ANSI 转义序列（ANSI escape code） 来控制文本的颜色，在 Win10 系统的 命令提示符 / 命令行 / 控制台 / cmd 的窗口中仅使用 cmd.exe 内置的命令来实现彩色输出，无论是在 Command Prompt（命令提示符） 中还是 .bat / .cmd 脚本中。 ANSI 转义序列 支持的颜色： 3/4 bit（8/16色）、8 bit（256色">
+
+
+
+  <link rel="alternate" href="/c1ino/atom.xml" title="c1ino's Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用 Win10 命令提示符自带命令实现彩色输出 | c1ino's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/c1ino/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">c1ino's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/c1ino/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/c1ino/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/c1ino/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/c1ino/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://c1ino.github.io/c1ino/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="c1ino">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/c1ino/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c1ino's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用 Win10 命令提示符自带命令实现彩色输出
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-03 21:18:22" itemprop="dateCreated datePublished" datetime="2019-08-03T21:18:22+08:00">2019-08-03</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-04 05:05:21" itemprop="dateModified" datetime="2019-08-04T05:05:21+08:00">2019-08-04</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/c1ino/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">3.1k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">3 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>原理是使用 <code>ANSI 转义序列（ANSI escape code）</code> 来控制文本的颜色，在 <code>Win10</code> 系统的 <code>命令提示符</code> / <code>命令行</code> / <code>控制台</code> / <code>cmd</code> 的窗口中仅使用 <code>cmd.exe</code> 内置的命令来实现彩色输出，无论是在 <code>Command Prompt（命令提示符）</code> 中还是 <code>.bat</code> / <code>.cmd</code> 脚本中。</p>
+<p><code>ANSI 转义序列</code> 支持的颜色： <code>3/4 bit（8/16色）</code>、<code>8 bit（256色）</code>、<code>24 bit（RGB真彩色）</code></p>
+<p>限制：<code>Win10</code> 较旧的版本可能不支持。</p>
+<blockquote>
+<p>本文仅作分享，不保证准确性。</p>
+</blockquote>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li>前言</li>
+<li>目录</li>
+<li>简介<ul>
+<li>FAQ</li>
+<li>原理与方法</li>
+</ul>
+</li>
+<li>3/4 bit（8/16色）</li>
+<li>8 bit（256色）</li>
+<li>24 bit（RGB真彩色）</li>
+<li>参考<a id="more"></a>
+
+
+</li>
+</ul>
+<hr>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
+<li>Q：Windows 从什么版本开始支持使用彩色化输出？<br>  A：不知道。</li>
+<li>Q：命令提示符还支持其他 <code>ANSI 转义序列</code> 吗？<br>  A：支持不少，但不清楚支持多少。</li>
+<li>Q：内置命令是 <code>cmd.exe</code> 提供的？<br>  A：不清楚……</li>
+<li>Q：这有什么用吗？<br>  A：鉴于 <code>cmd</code> / <code>bat</code> 脚本过于过时，以及不同版本的系统中兼容性的问题，大概没什么用。</li>
+</ul>
+<h2 id="原理与方法"><a href="#原理与方法" class="headerlink" title="原理与方法"></a>原理与方法</h2><p>通过 <code>prompt</code> 命令获得 <code>^[</code> / <code>ESC</code> ( <code>27</code> / <code>0x1b</code> / <code>033</code> ) 字符后，直接用 <code>echo</code> 命令配合 <code>ANSI 转义序列</code> 来输出指定颜色的文本。</p>
+<p><code>echo ^[[36mCyan^[[m</code></p>
+<ul>
+<li><code>^[</code>：<code>ESC</code> 字符，而不是 <code>^</code> <code>[</code> 两个字符的组合，输入方法见下方。</li>
+<li><code>^[[m</code>：默认颜色</li>
+<li><code>^[[36m</code>：青色前景</li>
+</ul>
+<blockquote>
+<p><code>ANSI 转义序列</code> 的格式与详细可以搜索或者阅读底部的参考链接，在此不再赘述。</p>
+</blockquote>
+<h3 id="ESC-字符的获取-输入方法"><a href="#ESC-字符的获取-输入方法" class="headerlink" title="ESC 字符的获取/输入方法"></a><code>ESC</code> 字符的获取/输入方法</h3><h4 id="命令提示符中"><a href="#命令提示符中" class="headerlink" title="命令提示符中"></a>命令提示符中</h4><ul>
+<li><p><code>Ctrl</code>+<code>[</code></p>
+<ul>
+<li>同时按下 Ctrl 和 [ 键。</li>
+</ul>
+</li>
+<li><p><code>Alt</code>+<code>2（小键盘）</code>+<code>7（小键盘）</code></p>
+<ul>
+<li>按住 Alt 键，依次输入小键盘的 2、7，松开 Alt 键。</li>
+</ul>
+</li>
+<li><p>输入命令：</p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">for</span> /f "delims=#" %i <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> %a <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> "ESC_CHAR=<span class="variable">%%i</span>"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>或者直接输出 ANSI 转义序列：  </p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">for</span> /f "delims=#" %i <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> %a <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> @<span class="built_in">echo</span>;<span class="variable">%i[36mCyan%</span>i[m</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="脚本中"><a href="#脚本中" class="headerlink" title="脚本中"></a>脚本中</h4><ul>
+<li><p>命令：</p>
+  <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /f "delims=#" <span class="variable">%%i</span> <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> "ESC_CHAR=<span class="variable">%%i</span>"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑器中输入 <code>Alt</code>+<code>2（小键盘）</code>+<code>7（小键盘）</code>（如支持）。</p>
+</li>
+<li><p>使用编辑器提供的功能（如有）来输入特殊字符 <code>ESC</code>。</p>
+</li>
+</ul>
+<hr>
+<h1 id="3-4-bit（8-16色）"><a href="#3-4-bit（8-16色）" class="headerlink" title="3/4 bit（8/16色）"></a>3/4 bit（8/16色）</h1><!-- > 以下是一些示例，详细内容不再赘述。 -->
+
+<ul>
+<li><code>^[[m</code> / <code>^[[0m</code>：默认颜色（重置）</li>
+<li><code>^[[&lt;n&gt;m</code>：指定前景色/背景色<ul>
+<li><code>&lt;n&gt;</code>：颜色代码，<br>  <code>30-37</code>：指定前景色；<br>  <code>40-47</code>：指定背景色。</li>
+</ul>
+</li>
+<li><code>^[[36m</code>：青色前景</li>
+<li><code>^[[41m</code>：红色背景<ul>
+<li><code>^[[36;41m</code>：青色前景+红色背景</li>
+</ul>
+</li>
+<li><code>^[[1m</code>：开启<strong>高亮</strong>前景</li>
+<li><code>^[[22m</code>：关闭<strong>高亮</strong>前景<ul>
+<li><code>^[[1;36;41m</code>：<strong>高亮</strong>青色前景+红色背景</li>
+<li><code>^[[22;36;41m</code>：正常青色前景+红色背景</li>
+</ul>
+</li>
+<li><code>^[[7m</code>：开启<strong>反显</strong>（交换前景和背景颜色）</li>
+<li><code>^[[27m</code>：关闭<strong>反显</strong><ul>
+<li><code>^[[7;36;41m</code>：红色前景+青色背景</li>
+</ul>
+</li>
+</ul>
+<h2 id="8色"><a href="#8色" class="headerlink" title="8色"></a>8色</h2><table>
+<thead>
+<tr>
+<th>颜色</th>
+<th>前景色代码</th>
+<th>背景色代码</th>
+<th>R</th>
+<th>G</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>黑（K）</td>
+<td>30</td>
+<td>40</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>红（R）</td>
+<td>31</td>
+<td>41</td>
+<td>128</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>绿（G）</td>
+<td>32</td>
+<td>42</td>
+<td>0</td>
+<td>128</td>
+<td>0</td>
+</tr>
+<tr>
+<td>黄（Y）</td>
+<td>33</td>
+<td>43</td>
+<td>128</td>
+<td>128</td>
+<td>0</td>
+</tr>
+<tr>
+<td>蓝（B）</td>
+<td>34</td>
+<td>44</td>
+<td>0</td>
+<td>0</td>
+<td>128</td>
+</tr>
+<tr>
+<td>品红（M）</td>
+<td>35</td>
+<td>45</td>
+<td>128</td>
+<td>0</td>
+<td>128</td>
+</tr>
+<tr>
+<td>青（C）</td>
+<td>36</td>
+<td>46</td>
+<td>0</td>
+<td>128</td>
+<td>128</td>
+</tr>
+<tr>
+<td>白</td>
+<td>37</td>
+<td>47</td>
+<td>128</td>
+<td>128</td>
+<td>128</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>来源：<a href="https://zh.wikipedia.org/zh-cn/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97#3/4%E4%BD%8D" target="_blank" rel="noopener">https://zh.wikipedia.org/zh-cn/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97#3/4%E4%BD%8D</a></p>
+</blockquote>
+<blockquote>
+<p><del>RGB + CMYK</del></p>
+</blockquote>
+<p>注：16色就是加上高亮的颜色。</p>
+<hr>
+<h1 id="8-bit（256色）"><a href="#8-bit（256色）" class="headerlink" title="8 bit（256色）"></a>8 bit（256色）</h1><ul>
+<li><code>^[[38;5;&lt;n&gt;m</code>：指定前景色为代码 <code>n</code> 的颜色</li>
+<li><code>^[[48;5;&lt;n&gt;m</code>：指定背景色为代码 <code>n</code> 的颜色<ul>
+<li><code>&lt;n&gt;</code>：颜色的代码，范围 <code>0-255</code>。颜色代码的详情和换算不在此赘述。</li>
+</ul>
+</li>
+<li><code>^[[38;5;39m</code>：指定前景色为代码 <code>39</code> 的“浅蓝”</li>
+<li><code>^[[48;5;219m</code>：指定背景色为代码 <code>219</code> 的“浅粉”</li>
+<li><code>^[[38;5;39;48;5;219m</code>：指定前景色为“浅蓝”，背景色为“浅粉”</li>
+</ul>
+<p>bat 脚本列出 256 色：</p>
+<blockquote>
+<p>输出 36 列</p>
+</blockquote>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">::src: https://stackoverflow.com/a/<span class="number">5344911</span></span><br><span class="line"><span class="built_in">set</span> ESC_CHAR=</span><br><span class="line">@<span class="keyword">for</span> /f "delims=#" <span class="variable">%%i</span> <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> ESC_CHAR=<span class="variable">%%i</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"><span class="built_in">set</span> newline=</span><br><span class="line"><span class="built_in">set</span> /a nlcnt=<span class="number">36</span></span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%i</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">255</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a clrstr=<span class="number">1000</span>+<span class="variable">%%i</span></span><br><span class="line">    <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">48</span>;<span class="number">5</span>;<span class="number">0</span>;<span class="number">38</span>;<span class="number">5</span>;<span class="variable">%%i</span>m <span class="variable">!clrstr:~-3!</span> <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">    <span class="built_in">set</span> /a "newline=(<span class="variable">%%i</span>+<span class="number">1</span>)<span class="variable">%%(</span><span class="number">16</span>)"</span><br><span class="line">    <span class="keyword">if</span> <span class="variable">%%i</span> <span class="keyword">geq</span> <span class="number">16</span> <span class="built_in">set</span> /a "newline=(<span class="variable">%%i</span>-<span class="number">15</span>)<span class="variable">%%(</span><span class="variable">%nlcnt%</span>)"</span><br><span class="line">    <span class="keyword">if</span> "<span class="variable">!newline!</span>" <span class="keyword">equ</span> "<span class="number">0</span>" <span class="built_in">echo</span>.</span><br><span class="line">)</span><br><span class="line"><span class="built_in">endlocal</span></span><br><span class="line"><span class="built_in">pause</span>&gt;<span class="built_in">nul</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出 18 列</p>
+</blockquote>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">::src: https://stackoverflow.com/a/<span class="number">5344911</span></span><br><span class="line"><span class="built_in">set</span> ESC_CHAR=</span><br><span class="line">@<span class="keyword">for</span> /f "delims=#" <span class="variable">%%i</span> <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> ESC_CHAR=<span class="variable">%%i</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%i</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">16</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a clrstr=<span class="number">1000</span>+<span class="variable">%%i</span></span><br><span class="line">    <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">5</span>;<span class="variable">%%i</span>m <span class="variable">!clrstr:~-3!</span> <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%r</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /l <span class="variable">%%i</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">17</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a "clrnum=(<span class="number">36</span>*<span class="variable">%%r</span>)+<span class="variable">%%i</span>+<span class="number">16</span>"</span><br><span class="line">        <span class="built_in">set</span> /a clrstr=<span class="number">1000</span>+clrnum</span><br><span class="line">        <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">5</span>;<span class="variable">!clrnum!</span>m <span class="variable">!clrstr:~-3!</span> <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">    )</span><br><span class="line">    <span class="built_in">echo</span>.</span><br><span class="line">)</span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%r</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /l <span class="variable">%%i</span> <span class="keyword">in</span> (<span class="number">18</span>,<span class="number">1</span>,<span class="number">35</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a "clrnum=(<span class="number">36</span>*<span class="variable">%%r</span>)+<span class="variable">%%i</span>+<span class="number">16</span>"</span><br><span class="line">        <span class="built_in">set</span> /a clrstr=<span class="number">1000</span>+clrnum</span><br><span class="line">        <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">5</span>;<span class="variable">!clrnum!</span>m <span class="variable">!clrstr:~-3!</span> <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">    )</span><br><span class="line">    <span class="built_in">echo</span>.</span><br><span class="line">)</span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%i</span> <span class="keyword">in</span> (<span class="number">232</span>,<span class="number">1</span>,<span class="number">255</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a clrstr=<span class="number">1000</span>+<span class="variable">%%i</span></span><br><span class="line">    <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">5</span>;<span class="variable">%%i</span>m <span class="variable">!clrstr:~-3!</span> <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">endlocal</span></span><br><span class="line"><span class="built_in">pause</span>&gt;<span class="built_in">nul</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="24-bit（RGB真彩色）"><a href="#24-bit（RGB真彩色）" class="headerlink" title="24 bit（RGB真彩色）"></a>24 bit（RGB真彩色）</h1><ul>
+<li><code>^[[38;2;&lt;r&gt;;&lt;g&gt;;&lt;b&gt;m</code>：指定前景色的 <code>RGB</code></li>
+<li><code>^[[48;2;&lt;r&gt;;&lt;g&gt;;&lt;b&gt;m</code>：指定背景色的 <code>RGB</code><ul>
+<li><code>&lt;r&gt;</code> / <code>&lt;g&gt;</code> / <code>&lt;b&gt;</code>：<br>  <code>0 &lt;= r, g, b &lt;=255</code></li>
+</ul>
+</li>
+</ul>
+<p>bat 脚本简略显示 24 bit 颜色：</p>
+<blockquote>
+<p>输出 108 列 18 行 1944(6*18*18) 色（可自定义）</p>
+</blockquote>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">::src: https://stackoverflow.com/a/<span class="number">5344911</span></span><br><span class="line"><span class="built_in">set</span> ESC_CHAR=</span><br><span class="line">@<span class="keyword">for</span> /f "delims=#" <span class="variable">%%i</span> <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> ESC_CHAR=<span class="variable">%%i</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"><span class="comment">REM 建议参数：2, 4, 6, 16, 18, 52, 86, 256</span></span><br><span class="line"><span class="built_in">set</span> /a rmax=<span class="number">2</span>-<span class="number">1</span>  &amp;<span class="built_in">rem</span> 组数-<span class="number">1</span></span><br><span class="line"><span class="built_in">set</span> /a gmax=<span class="number">18</span>-<span class="number">1</span>  &amp;<span class="built_in">rem</span> 行数-<span class="number">1</span></span><br><span class="line"><span class="built_in">set</span> /a bmax=<span class="number">18</span>-<span class="number">1</span>  &amp;<span class="built_in">rem</span> 每组的列数-<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%g</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="variable">%gmax%</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /l <span class="variable">%%r</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="variable">%rmax%</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="keyword">for</span> /l <span class="variable">%%b</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="variable">%bmax%</span>) <span class="keyword">do</span> (</span><br><span class="line">            <span class="built_in">set</span> /a "r=<span class="variable">%%r</span>*(<span class="number">255</span>/rmax)"</span><br><span class="line">            <span class="built_in">set</span> /a "g=<span class="variable">%%g</span>*(<span class="number">255</span>/gmax)"</span><br><span class="line">            <span class="built_in">set</span> /a "b=<span class="variable">%%b</span>*(<span class="number">255</span>/bmax)"</span><br><span class="line">            <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">2</span>;<span class="variable">!r!</span>;<span class="variable">!g!</span>;<span class="variable">!b!</span>m <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    <span class="built_in">echo</span>.</span><br><span class="line">)</span><br><span class="line"><span class="built_in">endlocal</span></span><br><span class="line"><span class="built_in">pause</span>&gt;<span class="built_in">nul</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出 16 列 256 行 4096(16*16*16) 色</p>
+</blockquote>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line">::src: https://stackoverflow.com/a/<span class="number">5344911</span></span><br><span class="line"><span class="built_in">set</span> ESC_CHAR=</span><br><span class="line">@<span class="keyword">for</span> /f "delims=#" <span class="variable">%%i</span> <span class="keyword">in</span> ('prompt #$E#^&amp;<span class="built_in">echo</span> on^&amp;<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> ^(<span class="number">1</span>^) <span class="keyword">do</span> <span class="built_in">rem</span>') <span class="keyword">do</span> <span class="built_in">set</span> ESC_CHAR=<span class="variable">%%i</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"><span class="keyword">for</span> /l <span class="variable">%%r</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">15</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /l <span class="variable">%%g</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">15</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="keyword">for</span> /l <span class="variable">%%b</span> <span class="keyword">in</span> (<span class="number">0</span>,<span class="number">1</span>,<span class="number">15</span>) <span class="keyword">do</span> (</span><br><span class="line">            <span class="built_in">set</span> /a "r=<span class="variable">%%r</span>*<span class="number">17</span>"</span><br><span class="line">            <span class="built_in">set</span> /a "g=<span class="variable">%%g</span>*<span class="number">17</span>"</span><br><span class="line">            <span class="built_in">set</span> /a "b=<span class="variable">%%b</span>*<span class="number">17</span>"</span><br><span class="line">            <span class="built_in">set</span> /p "str=<span class="variable">%ESC_CHAR%</span>[<span class="number">7</span>;<span class="number">40</span>;<span class="number">38</span>;<span class="number">2</span>;<span class="variable">!r!</span>;<span class="variable">!g!</span>;<span class="variable">!b!</span>m  <span class="variable">%ESC_CHAR%</span>[m"&lt;<span class="built_in">nul</span></span><br><span class="line">        )</span><br><span class="line">        <span class="built_in">echo</span>.</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"><span class="built_in">endlocal</span></span><br><span class="line"><span class="built_in">pause</span>&gt;<span class="built_in">nul</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li>Wiki<br>  <a href="https://zh.wikipedia.org/zh-cn/ANSI转义序列" target="_blank" rel="noopener">https://zh.wikipedia.org/zh-cn/ANSI转义序列</a></li>
+<li>相关讨论<ul>
+<li><a href="https://stackoverflow.com/questions/2048509/how-to-echo-with-different-colors-in-the-windows-command-line" target="_blank" rel="noopener">https://stackoverflow.com/questions/2048509/how-to-echo-with-different-colors-in-the-windows-command-line</a></li>
+<li><a href="https://superuser.com/questions/413073/windows-console-with-ansi-colors-handling" target="_blank" rel="noopener">https://superuser.com/questions/413073/windows-console-with-ansi-colors-handling</a></li>
+<li><a href="https://superuser.com/questions/1416402/can-we-use-more-colors-in-batch-script" target="_blank" rel="noopener">https://superuser.com/questions/1416402/can-we-use-more-colors-in-batch-script</a></li>
+<li><a href="https://stackoverflow.com/questions/16755142/how-to-make-win32-console-recognize-ansi-vt100-escape-sequences" target="_blank" rel="noopener">https://stackoverflow.com/questions/16755142/how-to-make-win32-console-recognize-ansi-vt100-escape-sequences</a></li>
+</ul>
+</li>
+<li>详细教程<ul>
+<li><a href="https://my.oschina.net/dingdayu/blog/1537064" target="_blank" rel="noopener">https://my.oschina.net/dingdayu/blog/1537064</a></li>
+<li><a href="https://my.oschina.net/SamXIAO/blog/2959478" target="_blank" rel="noopener">https://my.oschina.net/SamXIAO/blog/2959478</a></li>
+<li><a href="https://kuricat.com/articles/ansi-j4clw" target="_blank" rel="noopener">https://kuricat.com/articles/ansi-j4clw</a><ul>
+<li>（备份：<a href="https://learnku.com/articles/26231?order_by=vote_count&amp;" target="_blank" rel="noopener">https://learnku.com/articles/26231?order_by=vote_count&amp;</a> ）<!-- - https://zhuanlan.zhihu.com/p/36497529 --></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Windows 控制台官方资讯<ul>
+<li><a href="https://devblogs.microsoft.com/commandline/24-bit-color-in-the-windows-console/" target="_blank" rel="noopener">https://devblogs.microsoft.com/commandline/24-bit-color-in-the-windows-console/</a></li>
+<li><a href="https://devblogs.microsoft.com/commandline/new-experimental-console-features/" target="_blank" rel="noopener">https://devblogs.microsoft.com/commandline/new-experimental-console-features/</a></li>
+<li><a href="https://devblogs.microsoft.com/commandline/updating-the-windows-console-colors/" target="_blank" rel="noopener">https://devblogs.microsoft.com/commandline/updating-the-windows-console-colors/</a></li>
+<li><a href="https://devblogs.microsoft.com/commandline/introducing-the-windows-console-colortool/" target="_blank" rel="noopener">https://devblogs.microsoft.com/commandline/introducing-the-windows-console-colortool/</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>c1ino</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/" title="使用 Win10 命令提示符自带命令实现彩色输出">https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/c1ino/tags/Win10/" rel="tag"># Win10</a>
+          
+            <a href="/c1ino/tags/bat-cmd/" rel="tag"># bat/cmd</a>
+          
+            <a href="/c1ino/tags/CLI/" rel="tag"># CLI</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/c1ino/2019/06-19-streaming-from-win10-to-ios-primer/" rel="next" title="简易建立 Win10 至 iOS 的多媒体无线串流">
+                <i class="fa fa-chevron-left"></i> 简易建立 Win10 至 iOS 的多媒体无线串流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">c1ino</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/c1ino/archives/">
+                
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/c1ino/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/c1ino/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/c1ino/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/c1ino/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">3.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">3.1.</span> <span class="nav-text">FAQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理与方法"><span class="nav-number">3.2.</span> <span class="nav-text">原理与方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ESC-字符的获取-输入方法"><span class="nav-number">3.2.1.</span> <span class="nav-text">ESC 字符的获取/输入方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令提示符中"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">命令提示符中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本中"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">脚本中</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-bit（8-16色）"><span class="nav-number">4.</span> <span class="nav-text">3/4 bit（8/16色）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8色"><span class="nav-number">4.1.</span> <span class="nav-text">8色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-bit（256色）"><span class="nav-number">5.</span> <span class="nav-text">8 bit（256色）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-bit（RGB真彩色）"><span class="nav-number">6.</span> <span class="nav-text">24 bit（RGB真彩色）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c1ino</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/c1ino/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/c1ino/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/c1ino/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/c1ino/js/utils.js?v=7.2.0"></script>
+
+  <script src="/c1ino/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/c1ino/js/affix.js?v=7.2.0"></script>
+
+  <script src="/c1ino/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/c1ino/js/scrollspy.js?v=7.2.0"></script>
+<script src="/c1ino/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/c1ino/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/c1ino/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

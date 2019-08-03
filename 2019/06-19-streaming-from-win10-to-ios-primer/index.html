@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="c1ino&#39;s Blog">
 <meta property="og:description" content="前言关于如何在局域网内从 Win10 系统串流至 iOS 系统的一些简易方法的总结。 主要使用 FFmpeg 和 iOS 的 VLC 应用通过常见的流媒体协议实现直播串流，以及其他一些不需使用 FFmpeg 的点播串流方法。 （多媒体串流，指无需下载完整文件就可以播放流媒体。）  写作 primer guide，读作笔记   目录 前言 目录 简介 用途 优点 弊端 环境准备参考 FFmpeg 使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-27T13:16:25.658Z">
+<meta property="og:updated_time" content="2019-07-30T09:24:35.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简易建立 Win10 至 iOS 的多媒体无线串流">
 <meta name="twitter:description" content="前言关于如何在局域网内从 Win10 系统串流至 iOS 系统的一些简易方法的总结。 主要使用 FFmpeg 和 iOS 的 VLC 应用通过常见的流媒体协议实现直播串流，以及其他一些不需使用 FFmpeg 的点播串流方法。 （多媒体串流，指无需下载完整文件就可以播放流媒体。）  写作 primer guide，读作笔记   目录 前言 目录 简介 用途 优点 弊端 环境准备参考 FFmpeg 使">
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-27 21:16:25" itemprop="dateModified" datetime="2019-07-27T21:16:25+08:00">2019-07-27</time>
+                <time title="修改时间：2019-07-30 17:24:35" itemprop="dateModified" datetime="2019-07-30T17:24:35+08:00">2019-07-30</time>
               </span>
             
           
@@ -729,7 +729,7 @@
 <h5 id="细枝末节-2"><a href="#细枝末节-2" class="headerlink" title="细枝末节"></a>细枝末节</h5><ul>
 <li>可在 Nginx 配置文件的 RTMP 配置中使用任意空闲端口号。本例的配置中 RTMP 服务的端口为默认的 <code>1935</code>，因此省略。</li>
 <li>串流地址中的 <code>room</code> 也可以换成其他名字，使用时保持前后一致即可。</li>
-<li>相比基于 <code>UDP</code> 的 <code>RTP</code> <code>串流，RTMP</code> 串流要稳定得多，而且 <code>flv</code> 格式还支持立体音混响的无损音质串流，意味着更少的 CPU 占用，例如：<br>  <code>ffmpeg -f dshow -i audio=&quot;Stereo Mix (Realtek High Definition Audio)&quot; -c:a copy -f flv rtmp://localhost/rtmp/room</code></li>
+<li>相比基于 <code>UDP</code> 的 <code>RTP</code> 串流，<code>RTMP</code> 串流要稳定得多，而且 <code>flv</code> 格式还支持立体音混响的无损音质串流，意味着更少的 CPU 占用，例如：<br>  <code>ffmpeg -f dshow -i audio=&quot;Stereo Mix (Realtek High Definition Audio)&quot; -c:a copy -f flv rtmp://localhost/rtmp/room</code></li>
 <li>RTMP 推流的视音频编码只要与 flv 容器格式相容就行。</li>
 <li>不过如果串流到 iOS 的后台播放被打断的话，似乎不容易恢复播放，需要重新打开串流。</li>
 <li>以 flv 格式串流的视频质量不算好，这就需要微调一下 FFmpeg 的推流编码参数了。</li>
@@ -1027,6 +1027,22 @@
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/c1ino/2019/08-03-colored-echo-in-win10-command-prompt/" rel="prev" title="使用 Win10 命令提示符自带命令实现彩色输出">
+                使用 Win10 命令提示符自带命令实现彩色输出 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
       
@@ -1091,7 +1107,7 @@
                 
                   <a href="/c1ino/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1145,7 +1161,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1228,21 +1250,7 @@
   <span class="author" itemprop="copyrightHolder">c1ino</span>
 
   
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    
-    <span title="站点总字数">9k</span>
-  
 
-  
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    
-    <span title="站点阅读时长">8 分钟</span>
   
 </div>
 
