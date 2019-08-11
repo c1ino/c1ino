@@ -6,7 +6,7 @@
   <link href="/c1ino/atom.xml" rel="self"/>
   
   <link href="https://c1ino.github.io/c1ino/"/>
-  <updated>2019-08-04T12:33:34.642Z</updated>
+  <updated>2019-08-11T16:03:13.434Z</updated>
   <id>https://c1ino.github.io/c1ino/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt.html"/>
     <id>https://c1ino.github.io/c1ino/2019/08-03-colored-echo-in-win10-command-prompt.html</id>
     <published>2019-08-03T13:18:22.000Z</published>
-    <updated>2019-08-04T12:33:34.642Z</updated>
+    <updated>2019-08-11T16:03:13.434Z</updated>
     
     <summary type="html">
     
@@ -49,9 +49,9 @@
       <category term="笔记" scheme="https://c1ino.github.io/c1ino/categories/Note/"/>
     
     
-      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
+      <category term="batch/cmd" scheme="https://c1ino.github.io/c1ino/tags/batch-cmd/"/>
     
-      <category term="bat/cmd" scheme="https://c1ino.github.io/c1ino/tags/bat-cmd/"/>
+      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
     
       <category term="CLI" scheme="https://c1ino.github.io/c1ino/tags/CLI/"/>
     
@@ -109,13 +109,13 @@
       <category term="串流" scheme="https://c1ino.github.io/c1ino/categories/Streaming/"/>
     
     
+      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
+    
       <category term="iOS" scheme="https://c1ino.github.io/c1ino/tags/iOS/"/>
     
       <category term="VLC" scheme="https://c1ino.github.io/c1ino/tags/VLC/"/>
     
       <category term="FFmpeg" scheme="https://c1ino.github.io/c1ino/tags/FFmpeg/"/>
-    
-      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
     
       <category term="streaming" scheme="https://c1ino.github.io/c1ino/tags/streaming/"/>
     
