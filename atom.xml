@@ -6,7 +6,7 @@
   <link href="/c1ino/atom.xml" rel="self"/>
   
   <link href="https://c1ino.github.io/c1ino/"/>
-  <updated>2019-08-11T16:03:13.434Z</updated>
+  <updated>2020-02-03T09:42:53.391Z</updated>
   <id>https://c1ino.github.io/c1ino/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python3 venv 模块 No module named &#39;encodings&#39; 其中一种解决办法</title>
+    <link href="https://c1ino.github.io/c1ino/2020/01-19-python-venv-module-fatal-error.html"/>
+    <id>https://c1ino.github.io/c1ino/2020/01-19-python-venv-module-fatal-error.html</id>
+    <published>2020-01-19T02:12:19.000Z</published>
+    <updated>2020-02-03T09:42:53.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;本文经验仅供参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;报错信息&quot;&gt;&lt;a href=&quot;#报错信息&quot; class=&quot;headerlink&quot; title=&quot;报错信息&quot;&gt;&lt;/a&gt;报错信息&lt;/h1&gt;&lt;figure class=&quot;highlight cmd&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Fatal Python error: Py_Initialize: unable to load the file system codec&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;ModuleNotFoundError: &lt;span class=&quot;title&quot;&gt;No&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;named&lt;/span&gt; &#39;&lt;span class=&quot;title&quot;&gt;encodings&lt;/span&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;Win10 系统中使用 Python 3.x 自带的 venv 模块所生成的虚拟环境时出现的错误。&lt;/p&gt;
+&lt;h1 id=&quot;解决办法-TL-DR&quot;&gt;&lt;a href=&quot;#解决办法-TL-DR&quot; class=&quot;headerlink&quot; title=&quot;解决办法/TL;DR&quot;&gt;&lt;/a&gt;解决办法/TL;DR&lt;/h1&gt;&lt;p&gt;恢复安装 &lt;code&gt;venv_path\pyvenv.cfg&lt;/code&gt;（虚拟环境配置文件）所指定的特定路径和版本的 python 解释器。&lt;br&gt;（或者使用 &lt;code&gt;python -m venv --upgrade &amp;quot;venv_path&amp;quot;&lt;/code&gt; 更新配置文件以指定虚拟环境使用系统中&lt;code&gt;当前的 python 解释器&lt;/code&gt;？）&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://c1ino.github.io/c1ino/categories/Note/"/>
+    
+    
+      <category term="Python3" scheme="https://c1ino.github.io/c1ino/tags/Python3/"/>
+    
+      <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 Win10 命令提示符自带命令实现彩色输出</title>
@@ -49,9 +77,9 @@
       <category term="笔记" scheme="https://c1ino.github.io/c1ino/categories/Note/"/>
     
     
-      <category term="batch/cmd" scheme="https://c1ino.github.io/c1ino/tags/batch-cmd/"/>
-    
       <category term="Win10" scheme="https://c1ino.github.io/c1ino/tags/Win10/"/>
+    
+      <category term="batch/cmd" scheme="https://c1ino.github.io/c1ino/tags/batch-cmd/"/>
     
       <category term="CLI" scheme="https://c1ino.github.io/c1ino/tags/CLI/"/>
     
