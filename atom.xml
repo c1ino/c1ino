@@ -6,7 +6,7 @@
   <link href="/c1ino/atom.xml" rel="self"/>
   
   <link href="https://c1ino.github.io/c1ino/"/>
-  <updated>2020-02-12T16:18:09.316Z</updated>
+  <updated>2020-02-13T02:26:37.997Z</updated>
   <id>https://c1ino.github.io/c1ino/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://c1ino.github.io/c1ino/2020/02-10-python-reload-main-module-workaround.html"/>
     <id>https://c1ino.github.io/c1ino/2020/02-10-python-reload-main-module-workaround.html</id>
     <published>2020-02-10T03:10:16.000Z</published>
-    <updated>2020-02-12T16:18:09.316Z</updated>
+    <updated>2020-02-13T02:26:37.997Z</updated>
     
     <summary type="html">
     
@@ -34,6 +34,11 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&quot;权宜之计-TL-DR&quot;&gt;&lt;a href=&quot;#权宜之计-TL-DR&quot; class=&quot;headerlink&quot; title=&quot;权宜之计/TL;DR&quot;&gt;&lt;/a&gt;权宜之计/TL;DR&lt;/h2&gt;&lt;p&gt;示例：&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reload__main__&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;&#39;&#39;reload __main__ workaround&#39;&#39;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# __main__ module&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mod = sys.modules[&lt;span class=&quot;string&quot;&gt;&#39;__main__&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# reload&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    loader = mod.__dict__[&lt;span class=&quot;string&quot;&gt;&#39;__loader__&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    loader.exec_module(mod)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# from __main__ import *&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    sys.modules[&lt;span class=&quot;string&quot;&gt;&#39;__main__&#39;&lt;/span&gt;].__dict__.update(mod.__dict__)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; mod&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;或者这篇讨论中列举的方法？（未验证）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/29960634/reload-the-currently-running-python-script/29962256#29962256&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://stackoverflow.com/questions/29960634/reload-the-currently-running-python-script/29962256#29962256&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
