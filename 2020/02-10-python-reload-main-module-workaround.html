@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="c1ino&#39;s Blog">
 <meta property="og:description" content="本文经验仅供参考。  概要既不了解 import 原理，也不了解 ModuleSpec, loader, importer ，更不了解 importlib 模块的情况下，所写出的邪门歪道式强行重载主模块(__main__)的方法。 别名/Alias for SEO    重载 / 重新加载 / 热重载 / 热更新    主模块 / 当前模块 / 顶层模块 / 顶层脚本环境 / 顶层代码 / 顶层">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-13T18:03:12.593Z">
+<meta property="og:updated_time" content="2020-02-14T06:20:55.437Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python3 重载主模块(__main__)的权宜之计(workaround)">
 <meta name="twitter:description" content="本文经验仅供参考。  概要既不了解 import 原理，也不了解 ModuleSpec, loader, importer ，更不了解 importlib 模块的情况下，所写出的邪门歪道式强行重载主模块(__main__)的方法。 别名/Alias for SEO    重载 / 重新加载 / 热重载 / 热更新    主模块 / 当前模块 / 顶层模块 / 顶层脚本环境 / 顶层代码 / 顶层">
@@ -197,6 +197,10 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">c1ino's Blog</h1>
+      
     
     
   </div>
@@ -362,7 +366,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="c1ino">
-      <meta itemprop="description" content>
+      <meta itemprop="description" content="c1ino's Blog">
       <meta itemprop="image" content="/c1ino/images/avatar.gif">
     </span>
 
@@ -416,7 +420,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-14 02:03:12" itemprop="dateModified" datetime="2020-02-14T02:03:12+08:00">2020-02-14</time>
+                <time title="修改时间：2020-02-14 14:20:55" itemprop="dateModified" datetime="2020-02-14T14:20:55+08:00">2020-02-14</time>
               </span>
             
           
@@ -534,7 +538,7 @@
 </blockquote>
 </li>
 <li>其他交互式/REPL情况要如何重载主模块？<blockquote>
-<p>不清楚，也许可以尝试获取主模块路径，从路径导入并重载模块再覆盖全局变量的办法。<br><s>（不适用的原因也许是因为“主模块”不是真正的“顶层模块(<code>__main__</code>)”？）</s></p>
+<p>不清楚，也许可以尝试获取主模块路径，从路径导入并重载模块再覆盖全局变量的办法。<br><s>（不适用的原因也许是因为“主模块”不是真正的“顶层模块(<code>__main__</code>)”？）</s><br><s>（用回 <code>python -i</code>）</s><br><s>（<code>ipython %autoreload</code> 黑魔法）</s>  </p>
 </blockquote>
 </li>
 </ul>
@@ -754,7 +758,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">c1ino</p>
-              <div class="site-description motion-element" itemprop="description"></div>
+              <div class="site-description motion-element" itemprop="description">c1ino's Blog</div>
           </div>
 
           
@@ -780,6 +784,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     

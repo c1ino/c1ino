@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>c1ino&#39;s Blog</title>
   
-  
+  <subtitle>c1ino&#39;s Blog</subtitle>
   <link href="/c1ino/atom.xml" rel="self"/>
   
   <link href="https://c1ino.github.io/c1ino/"/>
-  <updated>2020-02-13T18:03:12.593Z</updated>
+  <updated>2020-02-14T06:20:55.437Z</updated>
   <id>https://c1ino.github.io/c1ino/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://c1ino.github.io/c1ino/2020/02-10-python-reload-main-module-workaround.html"/>
     <id>https://c1ino.github.io/c1ino/2020/02-10-python-reload-main-module-workaround.html</id>
     <published>2020-02-10T03:10:16.000Z</published>
-    <updated>2020-02-13T18:03:12.593Z</updated>
+    <updated>2020-02-14T06:20:55.437Z</updated>
     
     <summary type="html">
     
